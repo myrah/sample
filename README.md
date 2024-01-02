@@ -1,2 +1,2 @@
 # sample
-an sample repo
+A sample repo
