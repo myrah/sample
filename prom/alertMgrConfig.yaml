@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: config-example
+  labels:
+    alertmanagerConfig: example
+spec:
+  route:
+    receiver: alert-emailer
+    groupBy: ['alertname', 'priority']
+    groupWait: 10s
+    repeatInterval: 30m
+  receivers:
+    - name: alert-emailer
+      emailConfigs:
+      - to: test@email.com
+        sendResolved: false
+        from: from-email@email.com
+        smarthost: smtp.eample.com:25

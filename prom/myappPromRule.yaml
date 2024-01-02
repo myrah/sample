@@ -1,0 +1,22 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    role: alert-rules
+  name: myapp-prometheus-rules
+  namespace: monitoring
+spec:
+  groups:
+  - name: myapp_missing_metrics_alerts
+    rules:
+    - alert: MyappMissingMetrics
+      annotations:
+        description: MyApp {{$labels.namespace}}/{{$labels.pod}} has missed Metrics in the last 15m.
+        runbook_url: https://runbooks.prometheus-operator.dev/runbooks/prometheus/prometheusmissingruleevaluations
+        summary: MyApp is missing Metrics 
+      expr: |
+        absent(job_renew_counter) == 1
+      for: 15m
+      labels:
+        severity: critical
+    
