@@ -11,8 +11,8 @@ spec:
       app: myapp
   endpoints:
     - interval: 15s
-      port: metrics
-      scrapeTimeout: 14s
+      port: web
+      path: /metrics
   namespaceSelector:
     matchNames:
       - myapp
