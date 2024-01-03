@@ -4,10 +4,10 @@ metadata:
   name: myapp-deployment
   namespace: myapp
 spec:
-  replicas: 2
+  replicas: 1
   strategy:
     rollingUpdate:
-      maxSurge: 2
+      maxSurge: 1
       maxUnavailable: 1
   selector:
     matchLabels:
@@ -30,15 +30,14 @@ kind: Service
 metadata:
   name: myapp-service
   namespace: myapp
-  annotations:
-    prometheus.io/port: "metrics"
-    prometheus.io/scrape: "true"
+  labels:
+    app: myapp
 spec:
   selector:
     app: myapp
   ports:
-    - name: "metrics"
+    - name: web
       protocol: TCP
       port: 2112
       targetPort: 2112
-  type: LoadBalancer
+  type: ClusterIP
